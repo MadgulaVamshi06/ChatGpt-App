@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat with GPT</title>
+  <link rel="stylesheet" href="App.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    /* Include the contents of App.css here or link to it */
+    .App {
+      text-align: center;
+    }
+    
+    .App-header {
+      background-color: #282c34;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(10px + 2vmin);
+      color: white;
+    }
+
+    .App-header h1 {
+      font-size: 3rem;
+    }
+
+    .response {
+      margin-top: 20px;
+    }
+
+    .response h2 {
+      font-size: 2rem;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="App">
+    <header class="App-header">
+      <h1>Chat with GPT</h1>
+      <form id="chat-form">
+        <input
+          type="text"
+          id="message"
+          placeholder="Type your message here"
+        />
+        <button type="submit">Send</button>
+      </form>
+      <div class="response">
+        <h2>Response:</h2>
+        <p id="response-text"></p>
+      </div>
+    </header>
+  </div>
+
+  <script>
+    document.getElementById('chat-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const message = document.getElementById('message').value;
+      try {
+        const res = await axios.post('http://localhost:3000/chat', { message });
+        document.getElementById('response-text').innerText = res.data.response;
+      } catch (error) {
+        console.error('Error communicating with backend:', error);
+      }
+    });
+  </script>
+</body>
+</html>
